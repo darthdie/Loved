@@ -1,0 +1,473 @@
+﻿<Window x:Class="Loved.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Loved="clr-namespace:Loved"
+        xmlns:LControls="clr-namespace:Loved.Controls"
+        xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+        x:Name="this"
+        Title="{Binding ElementName=this, Path=WindowTitle}" Height="350" Width="525" WindowState="Maximized">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Save"
+                  Executed="SaveCommandExecuted"
+                  CanExecute="SaveCommandCanExecute"/>
+
+        <CommandBinding Command="Loved:CustomCommands.SaveProject"
+                        Executed="SaveProjectCommandExecuted"
+                        CanExecute="SaveProjectCommandCanExecute"/>
+
+        <CommandBinding Command="Loved:CustomCommands.CompileCommand"
+                  Executed="CompileCommandExecuted"
+                  CanExecute="CompileCommandCanExecute"/>
+
+        <CommandBinding Command="Loved:CustomCommands.RunCommand"
+                  Executed="RunCommandExecuted"
+                  CanExecute="RunCommandCanExecute"/>
+
+        <CommandBinding Command="Loved:CustomCommands.StopCommand"
+                  Executed="StopCommandExecuted"
+                  CanExecute="StopCommandCanExecute"/>
+        
+        <CommandBinding Command="Loved:CustomCommands.SearchFilesCommand"
+                        Executed="SearchFilesCommandExecuted"
+                        CanExecute="SearchFilesCommandCanExecute"/>
+        
+        <CommandBinding Command="Loved:CustomCommands.ReplaceFilesCommand"
+                        Executed="ReplaceFilesCommandExecuted"
+                        CanExecute="ReplaceFilesCommandCanExecute"/>
+        
+        <CommandBinding Command="Loved:CustomCommands.GotoLineCommand"
+                        Executed="GotoLineCommandExecuted"
+                        CanExecute="GotoLineCommandCanExecute"/>
+        
+        <CommandBinding Command="Loved:CustomCommands.OpenPreferencesCommand"
+                        Executed="OpenPreferencesCommandExecuted"
+                        CanExecute="OpenPreferencesCommandCanExecute"/>
+        
+        <CommandBinding Command="Loved:CustomCommands.OpenFileCommand"
+                        Executed="OpenFileCommandExecuted"
+                        CanExecute="OpenFileCommandCanExecute"/>
+        
+        <CommandBinding Command="Loved:CustomCommands.AddFileCommand"
+                        Executed="AddFileCommandExecuted"
+                        CanExecute="AddFileCommandCanExecute"/>
+        
+        <CommandBinding Command="Loved:CustomCommands.DeleteFileCommand"
+                        Executed="DeleteFileCommandExecuted"
+                        CanExecute="DeleteFileCommandCanExecute"/>
+
+        <CommandBinding Command="Loved:CustomCommands.OpenStackTraceFileCommand"
+                        Executed="OpenStackTraceFileCommandExecuted"
+                        CanExecute="OpenStackTraceFileCommandCanExecute"/>
+
+        <CommandBinding Command="Loved:CustomCommands.AddFolderCommand"
+                        Executed="AddFolderCommandExecuted"
+                        CanExecute="AddFolderCommandCanExecute"/>
+    </Window.CommandBindings>
+
+    <Window.InputBindings>
+        <KeyBinding Command="Loved:CustomCommands.RunCommand" Key="{Binding ElementName=this, Path=SettingsInstance.RunKey}" Modifiers="{Binding ElementName=this, Path=SettingsInstance.RunModifierKey}"/>
+        <KeyBinding Command="Loved:CustomCommands.CompileCommand" Key="{Binding ElementName=this, Path=SettingsInstance.CompileKey}" Modifiers="{Binding ElementName=this, Path=SettingsInstance.CompileModifierKey}"/>
+        <KeyBinding Command="Loved:CustomCommands.SearchFilesCommand" Key="{Binding ElementName=this, Path=SettingsInstance.SearchFilesKey}" Modifiers="{Binding ElementName=this, Path=SettingsInstance.SearchFilesModifierKey}"/>
+        <KeyBinding Command="Loved:CustomCommands.ReplaceFilesCommand" Key="{Binding ElementName=this, Path=SettingsInstance.ReplaceFilesKey}" Modifiers="{Binding ElementName=this, Path=SettingsInstance.ReplaceFilesModifierKey}"/>
+        <KeyBinding Command="Loved:CustomCommands.GotoLineCommand" Key="{Binding ElementName=this, Path=SettingsInstance.GotoLineKey}" Modifiers="{Binding ElementName=this, Path=SettingsInstance.GotoLineModifierKey}"/>
+    </Window.InputBindings>
+
+    <Window.Resources>
+        <Style x:Key="styleGridViewColumn" TargetType="{x:Type GridViewColumnHeader}" >
+            <Setter Property="Template" >
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                        <Border BorderBrush="LightGray" BorderThickness="1,0,1,0">
+                            <TextBlock Text="{TemplateBinding Content}" TextAlignment="Center" 
+                               Background="LightSteelBlue"  />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style TargetType="Image">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding ElementName=this, Path=SettingsInstance.HorizontalSplitterPosition,Converter={Loved:GridLengthConverter},Mode=TwoWay}"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Menu Grid.Row="0" Grid.ColumnSpan="3">
+            <Menu.Items>
+                <MenuItem Header="File">
+                    <MenuItem.Items>
+                        <MenuItem Header="New Project" Click="OnMenuButtonNewProjectClicked">
+                            <MenuItem.Icon>
+                                <Image Source="Icons/package_add.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Load Project" Click="OnMenuButtonProjectFromExistingFilesClicked">
+                            <MenuItem.Icon>
+                                <Image Source="Icons/package_go.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <Separator/>
+
+                        <MenuItem Header="Exit" Click="OnMenuButtonExitClicked">
+                            <MenuItem.Icon>
+                                <Image Source="Icons/exclamation.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem.Items>
+                </MenuItem>
+                
+                <MenuItem Header="Edit">
+                    <MenuItem Header="Undo" Command="Undo">
+                        <MenuItem.Icon>
+                            <Image Source="Icons/arrow_undo.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Redo" Command="Redo">
+                        <MenuItem.Icon>
+                            <Image Source="Icons/arrow_redo.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    
+                    <MenuItem Header="Cut" Command="Cut">
+                        <MenuItem.Icon>
+                            <Image Source="Icons/cut.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Copy" Command="Copy">
+                        <MenuItem.Icon>
+                            <Image Source="Icons/page_copy.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Paste" Command="Paste">
+                        <MenuItem.Icon>
+                            <Image Source="Icons/page_paste.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+
+                    <MenuItem Header="Select All" Command="ApplicationCommands.SelectAll"/>
+                    <Separator/>
+                    
+                    <MenuItem Header="Find in Files" Command="Loved:CustomCommands.SearchFilesCommand"/>
+                    <MenuItem Header="Replace in Files" Command="Loved:CustomCommands.ReplaceFilesCommand"/>
+                    <MenuItem Header="Go to..." Command="Loved:CustomCommands.GotoLineCommand"/>
+                    <Separator/>
+                    
+                    <MenuItem Header="Preferences" Command="Loved:CustomCommands.OpenPreferencesCommand">
+                        <MenuItem.Icon>
+                            <Image Source="Icons/cog.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </Menu.Items>            
+        </Menu>
+        
+        <Grid Grid.Row="1" Grid.Column="0">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <ToolBar Grid.Row="0" Band="1" BandIndex="1">
+                <Button Command="Loved:CustomCommands.AddFileCommand">
+                    <Image Source="Icons/script_add.png"/>
+                </Button>
+
+                <Button Command="Loved:CustomCommands.AddFolderCommand">
+                    <Image Source="Icons/folder_add.png"/>
+                </Button>
+
+                <Button Command="Loved:CustomCommands.DeleteFileCommand">
+                    <Image Source="Icons/delete.png"/>
+                </Button>
+            </ToolBar>
+
+            <TreeView Grid.Row="1" Grid.Column="0" Name="ProjectView"
+                      DataContext="{Binding ElementName=this, Path=Solution}"
+                      ItemsSource="{Binding Children}" 
+                      SelectedItemChanged="OnProjectViewSelectedItemChanged" 
+                      PreviewMouseRightButtonDown="OnPreviewRightMouseButtonDown"
+                      dd:DragDrop.IsDragSource="True"
+                      dd:DragDrop.IsDropTarget="True"
+                      dd:DragDrop.UseDefaultDragAdorner="True"
+                      dd:DragDrop.DropHandler="{Binding}">
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+                        <Setter Property="ContextMenu" Value="{Binding Menu}"/>
+                        <Setter Property="IsSelected" Value="{Binding IsSelected}" />
+                        <Setter Property="Loved:MouseDoubleClick.Command" Value="Loved:CustomCommands.OpenFileCommand"/>
+                        <Setter Property="Loved:MouseDoubleClick.CommandParameter" Value="{Binding}"/>
+                    </Style>
+                </TreeView.ItemContainerStyle>
+
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}" DataType="{x:Type Loved:ProjectViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Icons/package.png" Margin="2"/>
+                            <TextBlock Text="{Binding Path=Name}" Margin="2"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}" DataType="{x:Type Loved:ProjectDirectoryInfoViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Icons/folder.png" Margin="2"/>
+                            <LControls:EditableTextBlock Text="{Binding Name, Mode=TwoWay}" Margin="2" CanEnterEditMode="OnCanProjectItemEnterEditMode"
+                                             IsInEditMode="{Binding Edit, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type Loved:ProjectCodeFileInfoViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Icons/script_code.png" Margin="2"/>
+                            <LControls:EditableTextBlock Text="{Binding Name, Mode=TwoWay}" Margin="2" CanEnterEditMode="OnCanProjectItemEnterEditMode"
+                                             IsInEditMode="{Binding Edit, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type Loved:ProjectTextFileInfoViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Icons/page.png" Margin="2"/>
+                            <LControls:EditableTextBlock Text="{Binding Name, Mode=TwoWay}" Margin="2" CanEnterEditMode="OnCanProjectItemEnterEditMode"
+                                             IsInEditMode="{Binding Edit, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type Loved:ProjectAudioFileInfoViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Icons/sound.png" Margin="2"/>
+                            <LControls:EditableTextBlock Text="{Binding Name, Mode=TwoWay}" Margin="2" CanEnterEditMode="OnCanProjectItemEnterEditMode"
+                                             IsInEditMode="{Binding Edit, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type Loved:ProjectImageFileInfoViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Icons/camera.png" Margin="2"/>
+                            <LControls:EditableTextBlock Text="{Binding Name, Mode=TwoWay}" Margin="2" CanEnterEditMode="OnCanProjectItemEnterEditMode"
+                                             IsInEditMode="{Binding Edit, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.Resources>
+            </TreeView>
+
+        </Grid>
+        
+        <GridSplitter Grid.Column="1" 
+              Grid.Row="1"
+              HorizontalAlignment="Left" 
+              VerticalAlignment="Stretch"
+              Background="LightGray" 
+              ShowsPreview="true"
+              Width="3"/>
+        
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{Binding ElementName=this, Path=SettingsInstance.VerticalSplitterPosition,Converter={Loved:GridLengthConverter},Mode=TwoWay}"/>
+            </Grid.RowDefinitions>
+
+            <ToolBarTray Grid.Row="0">
+                <ToolBar Band="1" BandIndex="1">
+                    <Button Command="ApplicationCommands.Save" >
+                        <Image Source="Icons/disk.png" />
+                    </Button>
+
+                    <Button Command="Loved:CustomCommands.SaveProject">
+                        <Image Source="Icons/disk_multiple.png"/>
+                    </Button>
+
+                    <Separator/>
+
+                    <Button Command="Cut">
+                        <Image Source="Icons/cut.png"/>
+                    </Button>
+
+                    <Button Command="Copy">
+                        <Image Source="Icons/page_copy.png"/>
+                    </Button>
+
+                    <Button Command="Paste">
+                        <Image Source="Icons/page_paste.png"/>
+                    </Button>
+
+                    <Separator/>
+
+                    <Button Command="Undo">
+                        <Image Source="Icons/arrow_undo.png"/>
+                    </Button>
+
+                    <Button Command="Redo">
+                        <Image Source="Icons/arrow_redo.png"/>
+                    </Button>
+                    
+                    <Separator/>
+
+                    <Button Command="Loved:CustomCommands.CompileCommand">
+                        <Image Source="Icons/page_go.png"/>
+                    </Button>
+                    
+                    <Button Command="Loved:CustomCommands.RunCommand">
+                        <Image Source="Icons/resultset_next.png"/>
+                    </Button>
+                    
+                    <Button Command="Loved:CustomCommands.StopCommand">
+                        <Image Source="Icons/stop.png"/>
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
+
+            <Loved:TabbedLuaEditor Grid.Row="1" x:Name="MainTabbedEditor"/>
+
+            <GridSplitter Grid.Row="2"
+              ResizeDirection="Rows"
+              HorizontalAlignment="Stretch" 
+              VerticalAlignment="Stretch"
+              Background="LightGray" 
+              ShowsPreview="true"
+              Height="3"/>
+
+            <TabControl Grid.Row="3" TabStripPlacement="Bottom" Name="ExtrasTabControl">
+                <TabControl.Items>
+                    <TabItem Header="Compile Errors" Name="CompileErrorsTabItem">
+                        <ListView Grid.Row="3" ItemsSource="{Binding ElementName=this, Path=CompileErrors}" SelectedItem="{Binding ElementName=this, Path=SelectedCompileError}">
+                            <ListView.Resources>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <EventSetter Event="MouseDoubleClick" Handler="OnCompileErrorDoubleClick" />
+                                </Style>
+                            </ListView.Resources>
+
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.Columns>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding File}" Header="File"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Line}" Header="Line"/>
+
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </TabItem>
+                    
+                    <TabItem Header="Output" Name="OutputTabItem">
+                        <TextBox IsReadOnly="True" VerticalScrollBarVisibility="Auto" Name="OutputTextbox"/>
+                    </TabItem>
+
+                    <TabItem Header="Runtime Error" Name="RuntimeErrorsTabItem" DataContext="{Binding ElementName=this,Path=RuntimeError}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Column="0" Grid.Row="0" Margin="3" Text="Description:" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="1" Grid.Row="0" Margin="3" Text="{Binding Description}" Cursor="Arrow"/>
+
+                                <TextBlock Grid.Column="0" Grid.Row="1" Margin="3" Text="File:" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="1" Grid.Row="1" Margin="3" Text="{Binding File}" Cursor="Arrow"/>
+
+                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="3" Text="Line:" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="1" Grid.Row="2" Margin="3" Text="{Binding Line}" Cursor="Arrow"/>
+                            </Grid>
+                            
+                            <TextBlock Grid.Row="1" Margin="3" Text="Stack Trace:"/>
+
+                            <ListView Grid.Row="2" ItemsSource="{Binding StackTrace}" Name="StackTraceListView" Loved:CommandBehavior.Event="PreviewMouseDoubleClick" Loved:CommandBehavior.Command="Loved:CustomCommands.OpenStackTraceFileCommand" Loved:CommandBehavior.CommandParameter="{Binding ElementName=StackTraceListView, Path=SelectedItem}" >
+                                <ListView.View>
+                                    <GridView>
+                                        <GridView.Columns>
+                                            <GridViewColumn DisplayMemberBinding="{Binding File}" Header="File"/>
+                                            <GridViewColumn DisplayMemberBinding="{Binding Line}" Header="Line"/>
+                                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description"/>
+                                        </GridView.Columns>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Grid>
+                        <!--<ListView Grid.Row="3" ItemsSource="{Binding ElementName=this, Path=RuntimeErrors}" SelectedItem="{Binding ElementName=this, Path=SelectedRuntimeError}">
+                            <ListView.Resources>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <EventSetter Event="MouseDoubleClick" Handler="OnRuntimeErrorDoubleClick" />
+                                </Style>
+                            </ListView.Resources>
+
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.Columns>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding File}" Header="File"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Line}" Header="Line"/>
+                                        <GridViewColumn Header="Stack Trace">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Expander >
+                                                        <TextBlock Text="{Binding StackTrace}"/>
+                                                    </Expander>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>-->
+                    </TabItem>
+                    
+                    <TabItem Header="Find Results" Name="FindResultsTabItem">                     
+                        <ListView ItemsSource="{Binding ElementName=this, Path=SearchResults}" SelectedItem="{Binding ElementName=this, Path=SelectedSearchResult}">
+                            <ListView.Resources>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <EventSetter Event="MouseDoubleClick" Handler="OnSearchResultDoubleClick" />
+                                </Style>
+                            </ListView.Resources>
+                            
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.Columns>
+                                        <GridViewColumn Header="File" DisplayMemberBinding="{Binding File}"/>
+                                        <GridViewColumn Header="Line" DisplayMemberBinding="{Binding Line}"/>
+                                        <GridViewColumn Header="Result" DisplayMemberBinding="{Binding Result}"/>
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </TabItem>
+
+                </TabControl.Items>
+            </TabControl>
+        </Grid>
+    </Grid>
+</Window>

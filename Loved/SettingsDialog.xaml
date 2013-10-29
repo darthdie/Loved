@@ -1,0 +1,89 @@
+﻿<Window x:Class="Loved.SettingsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:input="clr-namespace:System.Windows.Input;assembly=WindowsBase"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        x:Name="this"
+        Closing="OnDialogClosing"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        Title="Settings" Height="300" Width="374">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="keyData"
+                    MethodName="GetValues" 
+                    ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="input:Key" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <ObjectDataProvider x:Key="modifierKeysData"
+                    MethodName="GetValues" 
+                    ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="input:ModifierKeys" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0" TabStripPlacement="Left">
+            <TabItem Header="General" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Margin="3" Content="Love.exe Path:"/>
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0" Margin="3" Text="{Binding ElementName=this, Path=NewSettings.LoveExecutablePath,UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button Grid.Column="1" Margin="3" Content="..." Width="20" Height="23" Click="OnLoveExecutableBrowseClicked"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Keybindings" IsEnabled="False" Visibility="Collapsed">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <ListBox Grid.Row="0" Margin="3" ItemsSource="{Binding ElementName=this, Path=Shortcuts}" SelectedItem="{Binding ElementName=this, Path=SelectedShortcut}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Name}" FontSize="12"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <StackPanel Grid.Row="1" Margin="3" Orientation="Horizontal">
+                        <ComboBox Margin="3" Width="95" ItemsSource="{Binding Source={StaticResource modifierKeysData}}" SelectedItem="{Binding ElementName=this, Path=SelectedShortcut.ModifierKeys}"/>
+                        <ComboBox Margin="3" Width="75" ItemsSource="{Binding Source={StaticResource keyData}}" SelectedItem="{Binding ElementName=this, Path=SelectedShortcut.Key}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <DockPanel Grid.Row="1" VerticalAlignment="Bottom">
+            <Button DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="3" Height="23" Width="65" Content="OK" Click="OnOKButtonClicked"/>
+            <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="3" Height="23" Width="65" Content="Cancel" Click="OnCancelButtonClicked" IsEnabled="{Binding ElementName=this, Path=IsNotFirstRun}"/>
+        </DockPanel>
+    </Grid>
+</Window>

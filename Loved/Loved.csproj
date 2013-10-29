@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2A7BCD09-D068-4876-90F0-5C887ACE0421}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Loved</RootNamespace>
+    <AssemblyName>Loved</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Loved.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GongSolutions.Wpf.DragDrop">
+      <HintPath>..\..\Dependencies\gong-wpf-dragdrop-master\GongSolutions.Wpf.DragDrop\bin\Debug\NET4\GongSolutions.Wpf.DragDrop.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.AvalonEdit">
+      <HintPath>..\..\Dependencies\AvalonEdit\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
+    <Reference Include="NLua">
+      <HintPath>..\..\NLua\NLua.dll</HintPath>
+    </Reference>
+    <Reference Include="Ookii.Dialogs.Wpf">
+      <HintPath>..\..\Dependencies\Ooki Dialogs\Ookii.Dialogs.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif">
+      <HintPath>..\..\Dependencies\WpfAnimatedGif.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddFileDialog.xaml.cs">
+      <DependentUpon>AddFileDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ModifierKeysConverter.cs" />
+    <Compile Include="DragDropHelper.cs" />
+    <Compile Include="DraggedAdorner.cs" />
+    <Compile Include="Extensions\AvalonEditExtensions.cs" />
+    <Compile Include="Controls\ChangeListener.cs" />
+    <Compile Include="Controls\ChangeListenerIgnoreAttribute.cs" />
+    <Compile Include="Controls\ChildChangeListener.cs" />
+    <Compile Include="Controls\CollectionChangeListener.cs" />
+    <Compile Include="Controls\CommandBehavior.cs" />
+    <Compile Include="Controls\CommandBehaviorBinding.cs" />
+    <Compile Include="Controls\EditableTextBlockAdorner.cs" />
+    <Compile Include="Controls\EditableTextBlock.cs" />
+    <Compile Include="Controls\InlineExpression.cs" />
+    <Compile Include="DebugOutput.cs" />
+    <Compile Include="Controls\DelegateCommand.cs" />
+    <Compile Include="Controls\EventHandlerGenerator.cs" />
+    <Compile Include="Extensions\FileSystemInfoExtensions.cs" />
+    <Compile Include="GifViewer.xaml.cs">
+      <DependentUpon>GifViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GotoLineDialog.xaml.cs">
+      <DependentUpon>GotoLineDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GridLengthConverter.cs" />
+    <Compile Include="InsertionAdorner.cs" />
+    <Compile Include="LuaCompiler.cs" />
+    <Compile Include="LuaFormattingStrategy.cs" />
+    <Compile Include="MouseDoubleClick.cs" />
+    <Compile Include="NamespaceInfoFile.cs" />
+    <Compile Include="NewFileItem.cs" />
+    <Compile Include="ProjectPath.cs" />
+    <Compile Include="RearrangeableTabControl.xaml.cs">
+      <DependentUpon>RearrangeableTabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShellExecute.cs" />
+    <Compile Include="StackTraceItem.cs" />
+    <Compile Include="Controls\TextBoxMaskBehavior.cs" />
+    <Compile Include="Utilities.cs" />
+    <Compile Include="ViewModels\ProjectParentViewModel.cs" />
+    <Compile Include="ViewModels\ProjectViewModel.cs" />
+    <Compile Include="Controls\VisualTreeHelpers.cs" />
+    <Compile Include="ViewModels\SolutionViewModel.cs" />
+    <Page Include="AddFileDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="BindingErrorListener.cs" />
+    <Compile Include="CompileError.cs" />
+    <Compile Include="CustomCommands.cs" />
+    <Compile Include="Controls\EditableCombobox.cs" />
+    <Compile Include="Controls\EnumDisplayName.cs" />
+    <Compile Include="Controls\EnumTypeConverter.cs" />
+    <Compile Include="FileTypes.cs" />
+    <Compile Include="FindReplaceDialog.xaml.cs">
+      <DependentUpon>FindReplaceDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchResult.cs" />
+    <Compile Include="MediaPlayer.xaml.cs">
+      <DependentUpon>MediaPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="RuntimeError.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SettingsDialog.xaml.cs">
+      <DependentUpon>SettingsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsFile.cs" />
+    <Compile Include="Controls\TextboxHelper.cs" />
+    <Compile Include="Controls\UIChildFinder.cs" />
+    <Compile Include="ViewModels\ProjectAudioFileInfoViewModel.cs" />
+    <Compile Include="ViewModels\ProjectCodeFileInfoViewModel.cs" />
+    <Compile Include="ViewModels\ProjectDirectoryInfoViewModel.cs" />
+    <Compile Include="ViewModels\ProjectImageFileInfoViewModel.cs" />
+    <Compile Include="ViewModels\ProjectInfoItemViewModel.cs" />
+    <Compile Include="ViewModels\ProjectTextFileInfoViewModel.cs" />
+    <Compile Include="TabbedLuaEditor.xaml.cs">
+      <DependentUpon>TabbedLuaEditor.xaml</DependentUpon>
+    </Compile>
+    <Page Include="FindReplaceDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GifViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GotoLineDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LuaTextEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LuaTextEditor.xaml.cs">
+      <DependentUpon>LuaTextEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="MediaPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RearrangeableTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TabbedLuaEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ProjectFile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LuaHighlighting.xshd" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\arrow_redo.png" />
+    <Resource Include="Icons\arrow_undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\disk.png" />
+    <Resource Include="Icons\disk_multiple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\cut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\page_copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\page_paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\resultset_next.png" />
+    <Resource Include="Icons\page_go.png" />
+    <Resource Include="Icons\camera.png" />
+    <Resource Include="Icons\sound.png" />
+    <Resource Include="Icons\script_code.png" />
+    <Resource Include="Icons\page_white_text.png" />
+    <Resource Include="Icons\page.png" />
+    <Resource Include="Icons\folder.png" />
+    <Resource Include="Icons\stop.png" />
+    <Resource Include="Icons\cancel.png" />
+    <Resource Include="Icons\control_pause.png" />
+    <Resource Include="Icons\control_play.png" />
+    <Resource Include="Icons\control_stop.png" />
+    <Resource Include="Icons\folder_go.png" />
+    <Resource Include="Icons\wrench.png" />
+    <Resource Include="Icons\tag.png" />
+    <Resource Include="Icons\arrow_right.png" />
+    <Resource Include="Icons\script.png" />
+    <Resource Include="Icons\cog.png" />
+    <Resource Include="Icons\package_add.png" />
+    <Resource Include="Icons\package_go.png" />
+    <Resource Include="Icons\exclamation.png" />
+    <Resource Include="Icons\add.png" />
+    <Resource Include="Icons\delete.png" />
+    <Resource Include="Icons\script_add.png" />
+    <Resource Include="Icons\script_delete.png" />
+    <Resource Include="Icons\folder_add.png" />
+    <Resource Include="Icons\folder_delete.png" />
+    <Resource Include="Icons\control_repeat.png" />
+    <Resource Include="Icons\control_repeat_blue.png" />
+    <Resource Include="Icons\package.png" />
+    <Content Include="LoveNamespace.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lua52.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

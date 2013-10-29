@@ -1,0 +1,87 @@
+﻿<Window x:Class="Loved.FindReplaceDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Loved="clr-namespace:Loved"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        x:Name="this"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen"
+        FocusManager.FocusedElement="{Binding ElementName=SearchTextbox}"
+        Closing="OnDialogClosing"
+        Title="Find and Replace" Height="250" Width="300">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="sourceData"
+                    MethodName="GetValues" 
+                    ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Loved:FindSources" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+    
+    <TabControl Name="MainTabControl">
+        <TabItem Header="Find in files" Name="FindTabItem">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <!-- Find -->
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    
+                    <!-- Look in-->
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    
+                    <!-- Buttons -->
+                    <RowDefinition Height="Auto"/>
+                    
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Row="0" Text="Find:"/>
+                <TextBox Grid.Row="1" Margin="3" Name="SearchTextbox" Text="{Binding ElementName=this, Path=SearchText}" Loved:TextboxHelper.HighlightTextOnFocus="True"/>
+                
+                <TextBlock Grid.Row="2" Text="Look in:"/>
+                <ComboBox Grid.Row="3" Margin="3" IsEditable="False" ItemsSource="{Binding Source={StaticResource sourceData}}" SelectedItem="{Binding ElementName=this, Path=SelectedFindSource}"/>
+
+                <DockPanel Grid.Row="4" Margin="3">
+                    <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Find All" IsDefault="True" Height="23" Width="55" Click="OnFindAllButtonClicked"/>
+                </DockPanel>
+            </Grid>
+        </TabItem>
+        
+        <TabItem Header="Replace in files" Name="ReplaceTabItem">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <!-- Find -->
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+
+                    <!-- Replace -->
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+
+                    <!-- Source -->
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+
+                    <RowDefinition Height="Auto"/>
+
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Row="0" Text="Find:"/>
+                <TextBox Grid.Row="1" Margin="3" Text="{Binding ElementName=this, Path=SearchText,UpdateSourceTrigger=PropertyChanged}" Loved:TextboxHelper.HighlightTextOnFocus="True" Name="SearchReplaceTextbox"/>
+                
+                <TextBlock Grid.Row="2" Text="Replace:"/>
+                <TextBox Grid.Row="3" Margin="3" Text="{Binding ElementName=this, Path=ReplaceText,UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Grid.Row="4" Text="Look in:"/>
+                <ComboBox Grid.Row="5" Margin="3" IsEditable="False" ItemsSource="{Binding Source={StaticResource sourceData}}" SelectedItem="{Binding ElementName=this, Path=SelectedFindSource}"/>
+
+                <DockPanel Grid.Row="6" Margin="3">
+                    <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Replace All" IsDefault="True" Height="23" Width="75" Click="OnReplaceAllButtonClicked"/>
+                </DockPanel>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Window>

@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="Loved.TabbedLuaEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sc="http://icsharpcode.net/sharpdevelop/avalonedit"
+             xmlns:Loved="clr-namespace:Loved"
+             mc:Ignorable="d" 
+             x:Name="this"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate x:Key="Local_TabItemDragTemplate">
+            <Border CornerRadius="5"
+				BorderBrush="Black"
+				BorderThickness="2"
+				Background="DodgerBlue">
+                <TextBlock Margin="5" Text="{Binding Path=Header}" />
+            </Border>
+        </DataTemplate>
+        
+        <Style x:Key="CloseIcon" TargetType="{x:Type Image}">
+            <Setter Property="Opacity" Value="0.5"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="1" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="NoChromeButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="Chrome" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#ADADAD"/>
+                                <Setter Property="Opacity" TargetName="Chrome" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <!--                    Loved:DragDropHelper.IsDragSource="true"
+				    Loved:DragDropHelper.IsDropTarget="true"
+				    Loved:DragDropHelper.DragDropTemplate="{StaticResource Local_TabItemDragTemplate}"-->
+    
+    <Grid>
+        <TabControl Name="MainTabControl" 
+                    ItemsSource="{Binding ElementName=this, Path=CodeFiles}" 
+                    SelectedItem="{Binding ElementName=this, Path=SelectedCodeFile}"
+                    >
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}">
+                    <!-- DnD -->
+                    <Setter Property="AllowDrop" Value="True"/>
+                    <EventSetter Event="PreviewMouseMove" Handler="TabItem_PreviewMouseMove"/>
+                    <EventSetter Event="Drop" Handler="TabItem_Drop"/>
+                    
+                    <Setter Property="Content" Value="{Binding Content}"/>
+                    <Setter Property="HeaderTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <Button 
+                                        Style="{DynamicResource NoChromeButton}"
+                                        Click="OnCloseButtonClicked"
+                                        Tag="{Binding}"
+                                        DockPanel.Dock="Right"
+                                        Focusable="False" 
+                                        Margin="3,1,0,0"
+                                        Padding="0"
+                                        VerticalContentAlignment="Bottom"
+                                        >
+                                        <Image Source="Icons/cancel.png" Width="14" Height="14" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="HighQuality" Style="{DynamicResource CloseIcon}"/>
+                                    </Button>
+                                                <ContentPresenter 
+                                Content="{Binding Path=DisplayName}" 
+                                VerticalAlignment="Center" 
+                                />
+                                </DockPanel>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <!--<Style.Triggers>
+                        <DataTrigger Binding="{Binding Editor.IsModified}" Value="False">
+                            <Setter Property="Header" Value="{Binding FileName}"/>
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding Editor.IsModified}" Value="True">
+                            <Setter Property="Header" Value="{Binding FileName, StringFormat={}{0}a}"/>
+
+                        </DataTrigger>
+                    </Style.Triggers>-->
+                </Style>
+            </TabControl.Resources>
+        </TabControl>
+    </Grid>
+</UserControl>

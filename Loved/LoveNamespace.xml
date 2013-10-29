@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Info Name="love" Description="Root love namespace">
+  <Info Name="audio" Description="Provides an interface to output sound to the user's speakers.">
+    <!-- Functions -->
+    <Info Name="getDistanceModel" Description="Returns the distance attenuation model." Prototype="DistanceModel getDistanceModel()" Type="Function"/>
+    <Info Name="getNumSources" Description="Gets the current number of simultaneously playing sources." Prototype="number getNumSources()" Type="Function"/>
+    <Info Name="getOrientation" Description="Returns the orientation of the listener." Prototype="number fx, fy, fz, ux, uy, uz getOrientation()" Type="Function"/>
+    <Info Name="getPosition" Description="Returns the position of the listener." Prototype="number x, y, z getPosition()" Type="Function"/>
+    <Info Name="getVelocity" Description="Returns the velocity of the listener." Prototype="number x, y, z getVelocity()" Type="Function"/>
+    <Info Name="getVolume" Description="Returns the master volume." Prototype="number getVolume()" Type="Function"/>
+    <Info Name="newSource" Description="Creates a new Source from a file, SoundData, or Decoder." Prototype="Source newSource(string filename, SourceType type)" Type="Function"/>
+    <Info Name="pause" Description="Pauses all audio." Prototype="pause()" Type="Function"/>
+    <Info Name="pause" Description="Pauses a Source." Prototype="pause(Source source)" Type="Function"/>
+    <Info Name="play" Description="Plays the specified Source." Prototype="play(Source source)" Type="Function"/>
+    <Info Name="resume" Description="Resumes all audio." Prototype="resume()" Type="Function"/>
+    <Info Name="resume" Description="Resumes a Source." Prototype="resume(Source source)" Type="Function"/>
+    <Info Name="rewind" Description="Rewinds all playing audio." Prototype="rewind()" Type="Function"/>
+    <Info Name="rewind" Description="Rewinds a Source." Prototype="rewind(Source source)" Type="Function"/>
+    <Info Name="setDistanceModel" Description="Sets the distance attenuation model." Prototype="setDistanceModel(DistanceModel model)" Type="Function"/>
+    <Info Name="setOrientation" Description="Sets the orientation of the listener." Prototype="setOrientation(number fx, fy, fz, ux, uy, uz)" Type="Function"/>
+    <Info Name="setPosition" Description="Sets the position of the listener." Prototype="setPosition(number x, y, z)" Type="Function"/>
+    <Info Name="setVelocity" Description="Sets the velocity of the listener." Prototype="setVelocity(number x, y, z)" Type="Function"/>
+    <Info Name="setVolume" Description="Sets the master volume." Prototype="setVolume(number volume)" Type="Function"/>
+    <Info Name="stop" Description="Stops all playing audio." Prototype="stop()" Type="Function"/>
+    <Info Name="stop" Description="Stops the Source." Prototype="stop(Source source)" Type="Function"/>
+  
+    <!-- Enums-->
+    <Info Name="DistanceModel" Description="The different distance models." Type="Enum">
+      <Info Name="none" Description="Sources do not get attenuated." Type="EnumValue"/>
+      <Info Name="inverse" Description="Inverse distance attenuation." Type="EnumValue"/>
+      <Info Name="inverse clamped" Description="Inverse distance attenuation." Type="EnumValue"/>
+      <Info Name="linear" Description="Linear attenuation." Type="EnumValue"/>
+      <Info Name="linear clamped" Description="Linear attenuation. Gain is clamped." Type="EnumValue"/>
+      <Info Name="exponent" Description="Exponential attenuation." Type="EnumValue"/>
+      <Info Name="exponent clamped" Description="Exponential attenuation. Gain is clamped." Type="EnumValue"/>
+    </Info>
+  
+    <Info Name="SourceType" Description="Types of audio sources." Type="Enum">
+      <Info Name="static" Description="Decode the entire sound at once." Type="EnumValue"/>
+      <Info Name="stream" Description="Stream the sound; decode it gradually." Type="EnumValue"/>
+    </Info>
+  
+    <Info Name="TimeUnit" Description="Units that represent time." Type="Enum">
+      <Info Name="seconds" Description="Regular seconds." Type="EnumValue"/>
+      <Info Name="samples" Description="Audio samples." Type="EnumValue"/>
+    </Info>
+  
+    <Info Name="Source" Description="A Source represents audio you can play back." Type="Table">
+      <!-- Add -->
+    </Info>
+  </Info>
+  
+  <Info Name="event" Description="Manages events, like keypresses.">
+    <Info Name="clear" Description="Clears the event queue." Type="Function"/>
+    <Info Name="poll" Description="Returns an iterator for messages in the event queue." Type="Function"/>
+    <Info Name="pump" Description="Pump events into the event queue." Type="Function"/>
+    <Info Name="push" Description="Adds an event to the event queue." Type="Function"/>
+    <Info Name="quit" Description="Exits the LÖVE program." Type="Function"/>
+    <Info Name="wait" Description="Like love.event.poll(), but blocks until there is an event in the queue." Type="Function"/>
+  
+    <Info Name="Event" Description="Arguments to love.event.push() and the like." Type="Enum">
+      <Info Name="focus" Description="Window focus gained or lost." Type="EnumValue"/>
+      <Info Name="joystickpressed" Description="Joystick pressed." Type="EnumValue"/>
+      <Info Name="joystickreleased" Description="Joystick released." Type="EnumValue"/>
+      <Info Name="keypressed" Description="Keyboard pressed." Type="EnumValue"/>
+      <Info Name="keyreleased" Description="Keyboard released." Type="EnumValue"/>
+      <Info Name="mousepressed" Description="Mouse pressed." Type="EnumValue"/>
+      <Info Name="mousereleased" Description="Mouse released." Type="EnumValue"/>
+      <Info Name="quit" Description="Quit." Type="EnumValue"/>
+    </Info>
+  </Info>
+  
+  <Info Name="filesystem" Description="Provides an interface to the user's filesystem.">
+    <!-- Table -->
+    <Info Name="File" Description="" Type="Table"/>
+    <Info Name="FileData" Description="" Type="Table"/>
+  
+    <!-- Functions -->
+    <Info Name="enumerate" Description="Returns all the files and subdirectories in the directory." Type="Function"/>
+    <Info Name="exists" Description="Check whether a file or directory exists." Type="Function"/>
+    <Info Name="GetAppdataDirectory" Description="Returns the application data directory (could be the same as getUserDirectory)." Type="Function"/>
+    <Info Name="getLastModified" Description="Gets the last modification time of a file." Type="Function"/>
+    <Info Name="getSaveDirectory" Description="Gets the full path to the designated save directory." Type="Function"/>
+    <Info Name="getUserDirectory" Description="Returns the path of the user's directory." Type="Function"/>
+    <Info Name="getWorkingDirectory" Description="Gets the current working directory." Type="Function"/>
+    <!--<Info Name="init" Description="Initializes love.filesystem, will be called internally, so should not be used explictly." Type="Function"/>-->
+    <Info Name="isDirectory" Description="Check whether something is a directory." Type="Function"/>
+    <Info Name="isFile" Description="Check whether something is a file." Type="Function"/>
+    <Info Name="lines" Description="Iterate over the lines in a file." Type="Function"/>
+    <Info Name="load" Description="Load a lua file (but not run it)." Type="Function"/>
+    <Info Name="mkdir" Description="Creates a directory." Type="Function"/>
+    <Info Name="newFile" Description="Creates a new File object." Type="Function"/>
+    <Info Name="newFileData" Description="Creates a new FileData object." Type="Function"/>
+    <Info Name="read" Description="Read the contents of a file" Type="Function"/>
+    <Info Name="remove" Description="Removes a file (or directory)." Type="Function"/>
+    <Info Name="setIdentity" Description="Sets the write directory for your game." Type="Function"/>
+    <Info Name="setSource" Description="Sets the source of the game, where the code is present, can only be called once, done automatically." Type="Function"/>
+    <Info Name="write" Description="Write data to a file." Type="Function"/>
+  
+    <Info Name="FileDecoder" Description="How to decode a given FileData." Type="Enum">
+      <Info Name="file" Description="The data is unencoded." Type="EnumValue"/>
+      <Info Name="base64" Description="The data is base64-encoded." Type="EnumValue"/>
+    </Info>
+  
+    <Info Name="FileMode" Description="The different modes you can open a File in." Type="Enum">
+      <Info Name="r" Description="Open a file for read." Type="EnumValue"/>
+      <Info Name="w" Description="Open a file for write." Type="EnumValue"/>
+      <Info Name="a" Description="Open a file for append." Type="EnumValue"/>
+      <Info Name="c" Description="Do not open a file (represents a closed file)." Type="EnumValue"/>
+    </Info>
+  </Info>
+  
+  <Info Name="font" Description="Allows you to work with fonts.">
+    <Info Name="newGlyphData" Description="Creates a new GlyphData." Type="Function"/>
+    <Info Name="newRasterizer" Description="Creates a new Rasterizer." Type="Function"/>
+  
+    <Info Name="GlyphData" Description="A GlyphData represents a drawable symbol of a font Rasterizer." Type="Table"/>
+    <Info Name="Rasterizer" Description="A Rasterizer handles font rendering, containing the font data (image or TrueType font) and drawable glyphs." Type="Table"/>
+  </Info>
+  
+  <Info Name="graphics" Description="Drawing of shapes and images, management of screen geometry."/>
+  
+  <Info Name="image" Description="Provides an interface to decode encoded image data.">
+    <Info Name="ImageData" Description="Raw (decoded) image data." Type="Table"/>
+  
+    <Info Name="newEncodedImageData" Description="Encodes ImageData." Type="Function"/>
+    <Info Name="newImageData" Description="Creates a new ImageData object." Type="Function"/>
+  
+    <Info Name="ImageFormat" Description="Encoded image formats." Type="Enum">
+      <Info Name="bmp" Description="BMP image format." Type="EnumValue"/>
+      <Info Name="tga" Description="Targa image format." Type="EnumValue"/>
+      <Info Name="png" Description="PNG image format." Type="EnumValue"/>
+      <Info Name="jpg" Description="JPG image format." Type="EnumValue"/>
+    </Info>
+  </Info>
+  
+  <Info Name="joystick" Description="Provides an interface to connected joysticks.">
+    <Info Name="close" Description="Closes a joystick." Type="Function"/>
+    <Info Name="getAxes" Description="Returns the position of each axis." Type="Function"/>
+    <Info Name="getAxis" Description="Returns the direction of the axis." Type="Function"/>
+    <Info Name="getBall" Description="Returns the change in ball position." Type="Function"/>
+    <Info Name="getHat" Description="Returns the direction of a hat." Type="Function"/>
+    <Info Name="getName" Description="Returns the name of a joystick." Type="Function"/>
+    <Info Name="getNumAxes" Description="Returns the number of axes on the joystick." Type="Function"/>
+    <Info Name="getNumBalls" Description="Returns the number of balls on the joystick." Type="Function"/>
+    <Info Name="getNumButtons" Description="Returns the number of buttons on the joystick." Type="Function"/>
+    <Info Name="getNumHats" Description="Returns the number of hats on the joystick." Type="Function"/>
+    <Info Name="getNumJoysticks" Description="Returns how many joysticks are available." Type="Function"/>
+    <Info Name="isDown" Description="Checks if a button on a joystick is pressed." Type="Function"/>
+    <Info Name="isOpen" Description="Checks if the joystick is open." Type="Function"/>
+    <Info Name="open" Description="Opens up a joystick to be used." Type="Function"/>
+  
+    <Info Name="JoystickHat" Description="Joystick hat positions." Type="Enum">
+      <Info Name="c" Description="Centered" Type="EnumValue"/>
+      <Info Name="d" Description="Down" Type="EnumValue"/>
+      <Info Name="l" Description="Left" Type="EnumValue"/>
+      <Info Name="ld" Description="Left+Down" Type="EnumValue"/>
+      <Info Name="lu" Description="Left+Up" Type="EnumValue"/>
+      <Info Name="r" Description="Right" Type="EnumValue"/>
+      <Info Name="rd" Description="Right+Dow" Type="EnumValue"/>
+      <Info Name="ru" Description="Right+Up" Type="EnumValue"/>
+      <Info Name="u" Description="Up" Type="EnumValue"/>
+    </Info>
+  </Info>
+  
+  <Info Name="keyboard" Description="Provides an interface to the user's keyboard.">
+    <Info Name="getKeyRepeat" Description="Returns the delay and interval of key repeating." Type="Function"/>
+    <Info Name="isDown" Description="Checks whether a certain key is down." Type="Function"/>
+    <Info Name="setKeyRepeat" Description="Enables or disables key repeat." Type="Function"/>
+  
+    <Info Name="KeyConstant" Description="All the keys you can press." Type="Enum">
+      <Info Name="a" Description="The A key" Type="EnumValue"/>
+      <Info Name="b" Description="The B key" Type="EnumValue"/>
+      <Info Name="c" Description="The C key" Type="EnumValue"/>
+      <Info Name="d" Description="The D key" Type="EnumValue"/>
+      <Info Name="e" Description="The E key" Type="EnumValue"/>
+      <Info Name="f" Description="The F key" Type="EnumValue"/>
+      <Info Name="g" Description="The G key" Type="EnumValue"/>
+      <Info Name="h" Description="The H key" Type="EnumValue"/>
+      <Info Name="i" Description="The I key" Type="EnumValue"/>
+      <Info Name="j" Description="The J key" Type="EnumValue"/>
+      <Info Name="k" Description="The K key" Type="EnumValue"/>
+      <Info Name="l" Description="The L key" Type="EnumValue"/>
+      <Info Name="m" Description="The M key" Type="EnumValue"/>
+      <Info Name="n" Description="The N key" Type="EnumValue"/>
+      <Info Name="o" Description="The O key" Type="EnumValue"/>
+      <Info Name="p" Description="The P key" Type="EnumValue"/>
+      <Info Name="q" Description="The Q key" Type="EnumValue"/>
+      <Info Name="r" Description="The R key" Type="EnumValue"/>
+      <Info Name="s" Description="The S key" Type="EnumValue"/>
+      <Info Name="t" Description="The T key" Type="EnumValue"/>
+      <Info Name="u" Description="The U key" Type="EnumValue"/>
+      <Info Name="v" Description="The V key" Type="EnumValue"/>
+      <Info Name="w" Description="The W key" Type="EnumValue"/>
+      <Info Name="x" Description="The X key" Type="EnumValue"/>
+      <Info Name="y" Description="The Y key" Type="EnumValue"/>
+      <Info Name="z" Description="The Z key" Type="EnumValue"/>
+      <Info Name="0" Description="The zero key" Type="EnumValue"/>
+      <Info Name="1" Description="The one key" Type="EnumValue"/>
+      <Info Name="2" Description="The two key" Type="EnumValue"/>
+      <Info Name="3" Description="The three key" Type="EnumValue"/>
+      <Info Name="4" Description="The four key" Type="EnumValue"/>
+      <Info Name="5" Description="The five key" Type="EnumValue"/>
+      <Info Name="6" Description="The six key" Type="EnumValue"/>
+      <Info Name="7" Description="The seven key" Type="EnumValue"/>
+      <Info Name="8" Description="The eight key" Type="EnumValue"/>
+      <Info Name="9" Description="The nine key" Type="EnumValue"/>
+      <Info Name="(space)" Description="Space key" Type="EnumValue"/>
+      <Info Name="!" Description="Exclamation mark key" Type="EnumValue"/>
+      <Info Name="&quot;" Description="Double quote key" Type="EnumValue"/>
+      <Info Name="#" Description="Hash key" Type="EnumValue"/>
+      <Info Name="$" Description="Dollar key" Type="EnumValue"/>
+      <Info Name="&amp;" Description="Ampersand key" Type="EnumValue"/>
+      <Info Name="'" Description="Single quote key" Type="EnumValue"/>
+      <Info Name="(" Description="Left parenthesis key" Type="EnumValue"/>
+      <Info Name=")" Description="Right parenthesis key" Type="EnumValue"/>
+      <Info Name="*" Description="Asterisk key" Type="EnumValue"/>
+      <Info Name="+" Description="Plus key" Type="EnumValue"/>
+      <Info Name="," Description="Comma key" Type="EnumValue"/>
+      <Info Name="-" Description="Hyphen-minus key" Type="EnumValue"/>
+      <Info Name="." Description="Full stop key" Type="EnumValue"/>
+      <Info Name="/" Description="Slash key" Type="EnumValue"/>
+      <Info Name=":" Description="Colon key" Type="EnumValue"/>
+      <Info Name=";" Description="Semicolon key" Type="EnumValue"/>
+      <Info Name="&lt;" Description="Less-than key" Type="EnumValue"/>
+      <Info Name="=" Description="Equal key" Type="EnumValue"/>
+      <Info Name="&gt;" Description="Greater-than key" Type="EnumValue"/>
+      <Info Name="?" Description="Question mark key" Type="EnumValue"/>
+      <Info Name="@" Description="At sign key" Type="EnumValue"/>
+      <Info Name="[" Description="Left square bracket key" Type="EnumValue"/>
+      <Info Name="\" Description="Backslash key" Type="EnumValue"/>
+      <Info Name="]" Description="Right square bracket key" Type="EnumValue"/>
+      <Info Name="^" Description="Caret key" Type="EnumValue"/>
+      <Info Name="_" Description="Underscore key" Type="EnumValue"/>
+      <Info Name="`" Description="Grave accent key" Type="EnumValue"/>
+      <Info Name="kp0" Description="The numpad zero key" Type="EnumValue"/>
+      <Info Name="kp1" Description="The numpad one key" Type="EnumValue"/>
+      <Info Name="kp2" Description="The numpad two key" Type="EnumValue"/>
+      <Info Name="kp3" Description="The numpad three key" Type="EnumValue"/>
+      <Info Name="kp4" Description="The numpad four key" Type="EnumValue"/>
+      <Info Name="kp5" Description="The numpad five key" Type="EnumValue"/>
+      <Info Name="kp6" Description="The numpad six key" Type="EnumValue"/>
+      <Info Name="kp7" Description="The numpad seven key" Type="EnumValue"/>
+      <Info Name="kp8" Description="The numpad eight key" Type="EnumValue"/>
+      <Info Name="kp9" Description="The numpad nine key" Type="EnumValue"/>
+      <Info Name="kp." Description="The numpad decimal point key" Type="EnumValue"/>
+      <Info Name="kp/" Description="The numpad division key" Type="EnumValue"/>
+      <Info Name="kp*" Description="The numpad multiplication key" Type="EnumValue"/>
+      <Info Name="kp-" Description="The numpad substraction key" Type="EnumValue"/>
+      <Info Name="kp+" Description="The numpad addition key" Type="EnumValue"/>
+      <Info Name="kpenter" Description="The numpad enter key" Type="EnumValue"/>
+      <Info Name="kp=" Description="The numpad equals key" Type="EnumValue"/>
+      <Info Name="up" Description="Up cursor key" Type="EnumValue"/>
+      <Info Name="down" Description="Down cursor key" Type="EnumValue"/>
+      <Info Name="right" Description="Right cursor key" Type="EnumValue"/>
+      <Info Name="left" Description="Left cursor key" Type="EnumValue"/>
+      <Info Name="home" Description="Home key" Type="EnumValue"/>
+      <Info Name="end" Description="End key" Type="EnumValue"/>
+      <Info Name="pageup" Description="Page up key" Type="EnumValue"/>
+      <Info Name="pagedown" Description="Page down key" Type="EnumValue"/>
+      <Info Name="insert" Description="Insert key" Type="EnumValue"/>
+      <Info Name="backspace" Description="Backspace key" Type="EnumValue"/>
+      <Info Name="tab" Description="Tab key" Type="EnumValue"/>
+      <Info Name="clear" Description="Clear key" Type="EnumValue"/>
+      <Info Name="return" Description="Return key" Type="EnumValue"/>
+      <Info Name="delete" Description="Delete key" Type="EnumValue"/>
+      <Info Name="f1" Description="The 1st function key" Type="EnumValue"/>
+      <Info Name="f2" Description="The 2nd function key" Type="EnumValue"/>
+      <Info Name="f3" Description="The 3rd function key" Type="EnumValue"/>
+      <Info Name="f4" Description="The 4th function key" Type="EnumValue"/>
+      <Info Name="f5" Description="The 5th function key" Type="EnumValue"/>
+      <Info Name="f6" Description="The 6th function key" Type="EnumValue"/>
+      <Info Name="f7" Description="The 7th function key" Type="EnumValue"/>
+      <Info Name="f8" Description="The 8th function key" Type="EnumValue"/>
+      <Info Name="f9" Description="The 9th function key" Type="EnumValue"/>
+      <Info Name="f10" Description="The 10th function key" Type="EnumValue"/>
+      <Info Name="f11" Description="The 11th function key" Type="EnumValue"/>
+      <Info Name="f12" Description="The 12th function key" Type="EnumValue"/>
+      <Info Name="f13" Description="The 13th function key" Type="EnumValue"/>
+      <Info Name="f14" Description="The 14th function key" Type="EnumValue"/>
+      <Info Name="f15" Description="The 15th function key" Type="EnumValue"/>
+      <Info Name="numlock" Description="Num-lock key" Type="EnumValue"/>
+      <Info Name="capslock" Description="Caps-lock key" Type="EnumValue"/>
+      <Info Name="scrollock" Description="Scroll-lock key" Type="EnumValue"/>
+      <Info Name="rshift" Description="Right shift key" Type="EnumValue"/>
+      <Info Name="lshift" Description="Left shift key" Type="EnumValue"/>
+      <Info Name="rctrl" Description="Right control key" Type="EnumValue"/>
+      <Info Name="lctrl" Description="Left control key" Type="EnumValue"/>
+      <Info Name="ralt" Description="Right alt key" Type="EnumValue"/>
+      <Info Name="lalt" Description="Left alt key" Type="EnumValue"/>
+      <Info Name="rmeta" Description="Right meta key" Type="EnumValue"/>
+      <Info Name="lmeta" Description="Left meta key" Type="EnumValue"/>
+      <Info Name="lsuper" Description="Left super key" Type="EnumValue"/>
+      <Info Name="rsuper" Description="Right super key" Type="EnumValue"/>
+      <Info Name="mode" Description="Mode key" Type="EnumValue"/>
+      <Info Name="compose" Description="Compose key" Type="EnumValue"/>
+      <Info Name="pause" Description="Pause key" Type="EnumValue"/>
+      <Info Name="escape" Description="Escape key" Type="EnumValue"/>
+      <Info Name="help" Description="Help key" Type="EnumValue"/>
+      <Info Name="print" Description="Print key" Type="EnumValue"/>
+      <Info Name="sysreq" Description="System request key" Type="EnumValue"/>
+      <Info Name="break" Description="Break key" Type="EnumValue"/>
+      <Info Name="menu" Description="Menu key" Type="EnumValue"/>
+      <Info Name="power" Description="Power key" Type="EnumValue"/>
+      <Info Name="euro" Description="Euro (€) key" Type="EnumValue"/>
+      <Info Name="undo" Description="Undo key" Type="EnumValue"/>
+    </Info>
+  </Info>
+  
+  <Info Name="mouse" Description="Provides an interface to the user's mouse.">
+    <Info Name="getPosition" Description="Returns the current position of the mouse." Type="Function"/>
+    <Info Name="getX" Description="Returns the current x-position of the mouse." Type="Function"/>
+    <Info Name="getY" Description="Returns the current y-position of the mouse." Type="Function"/> 
+    <Info Name="isDown" Description="Checks whether a certain button is down." Type="Function"/>
+    <Info Name="isGrabbed" Description="Checks if the mouse is grabbed." Type="Function"/>
+    <Info Name="isVisible" Description="Checks if the cursor is visible." Type="Function"/>
+    <Info Name="setGrab" Description="Grabs the mouse and confines it to the window." Type="Function"/>
+    <Info Name="setPosition" Description="Sets the current position of the mouse." Type="Function"/>
+    <Info Name="setVisible" Description="Sets the current visibility of the cursor." Type="Function"/>
+    
+    <Info Name="MouseConstant" Description="Mouse buttons." Type="Enum">
+      <Info Name="l" Description="Left Mouse Button." Type="EnumValue"/>
+      <Info Name="m" Description="Middle Mouse Button." Type="EnumValue"/>
+      <Info Name="r" Description="Right Mouse Button." Type="EnumValue"/>
+      <Info Name="wd" Description="Mouse Wheel Down." Type="EnumValue"/>
+      <Info Name="wu" Description="Mouse Wheel Up." Type="EnumValue"/>
+      <Info Name="x1" Description="Mouse X1 (also known as button 4)." Type="EnumValue"/>
+      <Info Name="x2" Description="Mouse X2 (also known as button 5)." Type="EnumValue"/>
+    </Info>
+  </Info>
+  
+  <Info Name="physics" Description="Can simulate 2D rigid body physics in a realistic manner.">
+    <Info Name="Body" Description="Bodies are objects with velocity and position." Type="Table"/>
+    <Info Name="Contact" Description="Contacts are objects created to manage collisions in worlds." Type="Table"/>
+    <Info Name="Fixture" Description="Fixtures attach shapes to bodies." Type="Table"/>
+    <Info Name="Joint" Description="Attach multiple bodies together to interact in unique ways." Type="Table"/>
+    <Info Name="Shape" Description="Shapes are objects used to control mass and collisions." Type="Table"/>
+    <Info Name="World" Description="A world is an object that contains all bodies and joints." Type="Table"/>
+    
+    <Info Name="getDistance" Description="Returns the two closest points between two fixtures and their distance." Type="Function"/>
+    <Info Name="getMeter" Description="Returns the meter scale factor." Type="Function"/>
+    <Info Name="newBody" Description="Creates a new body." Type="Function"/>
+    <Info Name="newChainShape" Description="Creates a new ChainShape." Type="Function"/>
+    <Info Name="newCircleShape" Description="Creates a circle shape." Type="Function"/>
+    <Info Name="newDistanceJoint" Description="Creates a DistanceJoint between two bodies." Type="Function"/>
+    <Info Name="newEdgeShape" Description="Creates a new EdgeShape." Type="Function"/>
+    <Info Name="newFixture" Description="Creates and attaches a fixture." Type="Function"/>
+    <Info Name="newFrictionJoint" Description="A FrictionJoint applies friction to a body." Type="Function"/>
+    <Info Name="newGearJoint" Description="Create a GearJoint connecting two Joints." Type="Function"/>
+    <Info Name="newMouseJoint" Description="Create a joint between a body and the mouse." Type="Function"/>
+    <Info Name="newPolygonShape" Description="Creates a new PolygonShape." Type="Function"/>
+    <Info Name="newPrismaticJoint" Description="Creates a PrismaticJoint between two bodies." Type="Function"/>
+    <Info Name="newPulleyJoint" Description="Creates a PulleyJoint to join two bodies to each other and the ground." Type="Function"/>
+    <Info Name="newRectangleShape" Description="Shorthand for creating rectangluar PolygonShapes." Type="Function"/>
+    <Info Name="newRevoluteJoint" Description="Creates a pivot joint between two bodies." Type="Function"/>
+    <Info Name="newRopeJoint" Description="Creates a joint between two bodies that enforces a max distance between them." Type="Function"/>
+    <Info Name="newWeldJoint" Description="A WeldJoint essentially glues two bodies together." Type="Function"/>
+    <Info Name="newWheelJoint" Description="Creates a wheel joint." Type="Function"/>
+    <Info Name="newWorld" Description="Creates a new World." Type="Function"/>
+    <Info Name="setMeter" Description="Sets the meter scale factor." Type="Function"/>
+  </Info>
+  
+  <Info Name="sound" Description="This module is responsible for decoding sound files.">
+    <Info Name="Decoder" Description="An object which can gradually decode a sound file." Type="Table"/>
+    <Info Name="SoundData" Description="Contains raw audio samples." Type="Table"/>
+  
+    <Info Name="newDecoder" Description="Attempts to find a decoder for the encoded sound data in the specified file." Type="Function"/>
+    <Info Name="newSoundData" Description="Creates a new SoundData." Type="Function"/>
+  </Info>
+  
+  <Info Name="thread" Description="Allows you to work with threads.">
+    <Info Name="Thread" Description="A Thread represents a thread." Type="Table"/>
+  
+    <Info Name="getThread" Description="Look for a thread and get its object." Type="Function"/>
+    <Info Name="getThreads" Description="Get all threads." Type="Function"/>
+    <Info Name="newThread" Description="Creates a new Thread from a Lua file or FileData object." Type="Function"/>
+  </Info>
+  
+  <Info Name="timer" Description="Provides an interface to your system's clock.">
+    <Info Name="getDelta" Description="Returns the time between the last two frames." Type="Function"/>
+    <Info Name="getFPS" Description="Returns the current frames per second." Type="Function"/>
+    <Info Name="getMicroTime" Description="Returns the value of a timer with microsecond precision." Type="Function"/>
+    <Info Name="getTime" Description="Returns the amount of time since some time in the past." Type="Function"/>
+    <Info Name="sleep" Description="Sleeps the program for the specified amount of time." Type="Function"/>
+    <Info Name="step" Description="Measures the time between two frames." Type="Function"/>
+  </Info>
+</Info>
