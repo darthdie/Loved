@@ -130,6 +130,16 @@ namespace Loved{
         }
 
         private void OnFileWatcherRenamed(object sender, RenamedEventArgs e) {
+            var file = GetFile(e.OldFullPath) as ProjectInfoFileItemViewModel;
+            if (file != null) {
+                if (file.IsOpen && file.IsModified) {
+                    if (MessageBox.Show(string.Format("The file '{0}' was renamed and there are unsaved changes, would you like to save the changes?", e.Name), "Save Changes?", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
+                        //save
+                    }
+                }
+
+                file.UpdatePath(e.FullPath);
+            }
         }
 
         public void AddChild(FileSystemInfo info) {

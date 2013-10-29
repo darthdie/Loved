@@ -195,6 +195,12 @@ namespace Loved {
 
             Menu.Items.Add(filePropertiesItem);
         }
+
+        public void UpdatePath(string path) {
+            Data = new FileInfo(path);
+            NotifyPropertyChanged("Name");
+            NotifyPropertyChanged("Path");
+        }
     }
 
     public interface IProjectItemViewModel {

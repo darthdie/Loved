@@ -380,6 +380,12 @@ namespace Loved {
                 ShowLineNumbers = true
             };
 
+            Model.PropertyChanged += (s, o) => {
+                if (o.PropertyName == "Name" || o.PropertyName == "Path") {
+                    Editor.Load(model.Path);
+                }
+            };
+
             Editor.Load(Path);
 
             foldingManager = FoldingManager.Install(Editor.TextArea);
