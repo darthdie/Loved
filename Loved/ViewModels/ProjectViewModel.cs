@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Threading;
 using ThomasJaworski.ComponentModel;
 
 namespace Loved{
@@ -122,7 +123,7 @@ namespace Loved{
         }
 
         private void HandleFileCreation(string filePath) {
-            var dir = GetFile(System.IO.Path.GetDirectoryName(filePath)) as ProjectDirectoryInfoViewModel;
+            var dir = GetFile(System.IO.Path.GetDirectoryName(filePath)) as IProjectParentViewModel;
             if (dir != null) {
                 dir.AddChild(new FileInfo(filePath));
             }
@@ -132,6 +133,14 @@ namespace Loved{
         }
 
         public void AddChild(FileSystemInfo info) {
+            if (!System.Windows.Application.Current.Dispatcher.CheckAccess()) {
+                System.Windows.Application.Current.Dispatcher.Invoke(() => {
+                    AddChild(info);
+                });
+
+                return;
+            }
+
             if (info.IsDirectory()) {
                 Children.Add(new ProjectDirectoryInfoViewModel(this, (DirectoryInfo)info));
             }
@@ -160,6 +169,10 @@ namespace Loved{
         }
 
         public ProjectInfoItemViewModel GetFile(string searchPath) {
+            if (searchPath == Path) {
+                return this;
+            }
+
             foreach (var child in Children) {
                 if (child.Path == searchPath) {
                     return child;

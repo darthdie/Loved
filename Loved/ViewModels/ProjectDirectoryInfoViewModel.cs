@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using IO = System.IO;
 
 namespace Loved {
@@ -96,6 +97,14 @@ namespace Loved {
         }
 
         public void AddChild(FileSystemInfo info) {
+            if (!System.Windows.Application.Current.Dispatcher.CheckAccess()) {
+                System.Windows.Application.Current.Dispatcher.Invoke(() => {
+                    AddChild(info);
+                });
+
+                return;
+            }
+
             if (info.IsDirectory()) {
                 Children.Add(new ProjectDirectoryInfoViewModel(this, (DirectoryInfo)info));
             }
